@@ -106,8 +106,7 @@ RUN sh -c 'echo "deb http://packages.ros.org/ros/ubuntu `lsb_release -cs` main" 
     apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116 && \
     curl http://repo.ros2.org/repos.key | sudo apt-key add - && \
     apt-get update && apt-get install -y ros-melodic-desktop && \
-    apt-get install -y python-rosinstall && \
-    rosdep init
+    apt-get install -y python-rosinstall 
 
 # Install Gazebo
 RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-stable.list' && \
@@ -118,6 +117,7 @@ RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb
 
 # Setup ROS
 USER $USER
+RUN rosdep init
 RUN rosdep fix-permissions && rosdep update
 RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
