@@ -115,10 +115,17 @@ RUN sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu-stable `lsb
     apt-get install -y gazebo9 libgazebo9-dev && \
     apt-get install -y ros-melodic-gazebo-ros-pkgs ros-melodic-gazebo-ros-control
 
+
+#install missing rosdep
+RUN apt-get install python-rosdep
+
 # Setup ROS
-USER $USER
+#USER $USER
 RUN rosdep init
-RUN rosdep fix-permissions && rosdep update
+RUN rosdep fix-permissions 
+USER $USER
+RUN rosdep update
+
 RUN echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 RUN /bin/bash -c "source ~/.bashrc"
 
