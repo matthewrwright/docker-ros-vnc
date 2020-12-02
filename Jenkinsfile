@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('') {
       steps {
-        sh 'docker build -t docker-ros-vnc .'
+        sh 'docker build --pull -t docker-ros-vnc .'
       }
     }
 
